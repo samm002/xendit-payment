@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pembayaran</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Form Pembayaran</h1>
+    <form id="paymentForm" method="post">
+        <label for="paymentAmount">Jumlah Pembayaran:</label>
+        <input type="number" id="paymentAmount" name="paymentAmount" required>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+      document.getElementById('paymentForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const paymentAmount = document.getElementById('paymentAmount').value;
+        const endpoint = "http://localhost:3000";
+
+        try {
+          const response = await fetch(`${endpoint}/pay`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ paymentAmount }),
+          });
+
+          if (response.ok) {
+              const data = await response.json();
+              window.open(data.data, '_blank');
+          } else {
+            console.error('Server error:', response);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      });
+    </script>
+</body>
+</html>
