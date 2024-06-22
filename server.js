@@ -1,7 +1,7 @@
 require('dotenv').config();
 const cors = require("cors");
 const express = require("express");
-const router = require('./routes');
+const router = require('./src/routes');
 
 const app = express();
 const port = 3000;
@@ -10,10 +10,12 @@ const port = 3000;
 app.use(cors({origin: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
 
 // View Engine Setup
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', './src/views');
 
 // Routes
 app.use(router);
