@@ -1,13 +1,13 @@
 const { Invoice: InvoiceClient } = require('xendit-node');
 const { v4: uuidv4 } = require("uuid");
 const path = require('path');
-const port = process.env.PORT || 3000;
+const url = process.env.APP_URL;
 
 const xenditInvoiceClient = new InvoiceClient({ secretKey: process.env.XENDIT_API_KEY });
 
 const homePage = (req, res) => {
   try {
-    res.render(path.join(__dirname, 'views', 'index'), { port });
+    res.render(path.join(__dirname, 'views', 'index'), { url });
   } catch (error) {
     console.error('Error rendering home page:', error);
     res.status(500).send('Error rendering home page');

@@ -4,7 +4,7 @@ const express = require("express");
 const router = require('./routes');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = 3000;
 
 // Middleware
 app.use(cors({origin: true}));
