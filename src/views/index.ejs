@@ -18,7 +18,7 @@
         event.preventDefault();
 
         const paymentAmount = document.getElementById('paymentAmount').value;
-        const endpoint = "http://localhost:3000";
+        const endpoint = `http://localhost:<%= port || 3000 %>`;
 
         try {
           const response = await fetch(`${endpoint}/pay`, {

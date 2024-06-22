@@ -1,4 +1,2 @@
-node-app/backend/node_modules
-node-app/backend/.env
-xendit-library/node_modules
-xendit-library/.env
+node_modules
+.env
