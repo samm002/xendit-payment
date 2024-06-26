@@ -3,44 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pembayaran</title>
+    <title>Form Pembayaran Multi-Input</title>
+    <style>
+        .payment-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .payment-box {
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            width: 150px; 
+        }
+        img {
+            width: 100%; 
+            height: auto; 
+            margin-bottom: 10px; 
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        var appUrl = '<%= process.env.APP_URL %>'; // Menggunakan EJS untuk memasukkan variabel lingkungan
-    </script>
 </head>
 <body>
-    <h1>Form Pembayaran</h1>
-    <form id="paymentForm" method="post">
-        <label for="paymentAmount">Jumlah Pembayaran:</label>
-        <input type="number" id="paymentAmount" name="paymentAmount" required>
-        <button type="submit">Submit</button>
-    </form>
+    <h1>Form Pembayaran Multi-Input</h1>
+    <div class="payment-container">
+        <!-- Buat enam kotak input dengan button -->
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 1">
+            <button onclick="submitPayment(5000000, 'http://linkToSuccessPage1.com')">Bayar 5 Juta</button>
+        </div>
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 2">
+            <button onclick="submitPayment(2000000, 'http://linkToSuccessPage2.com')">Bayar 2 Juta</button>
+        </div>
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 3">
+            <button onclick="submitPayment(3000000, 'http://linkToSuccessPage3.com')">Bayar 3 Juta</button>
+        </div>
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 4">
+            <button onclick="submitPayment(1000000, 'http://linkToSuccessPage4.com')">Bayar 1 Juta</button>
+        </div>
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 5">
+            <button onclick="submitPayment(500000, 'http://linkToSuccessPage5.com')">Bayar 500 Ribu</button>
+        </div>
+        <div class="payment-box">
+            <img src="/assets/PMDG777.jpg" alt="Gambar 6">
+            <button onclick="submitPayment(50000, 'http://linkToSuccessPage6.com')">Bayar 50 Ribu</button>
+        </div>
+    </div>
     <script>
-        document.getElementById('paymentForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
+        var appUrl = '<%= process.env.APP_URL %>'; 
 
-            const paymentAmount = document.getElementById('paymentAmount').value;
-
+        async function submitPayment(amount) {
             try {
-                const response = await fetch(`${appUrl}/pay`, {  // Menggunakan appUrl yang didefinisikan di atas
-                    method: 'POST',
+                const response = await axios.post(`${appUrl}/pay`, { paymentAmount: amount }, {
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ paymentAmount }),
+                    }
                 });
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Success:', data);
-                    window.open(data.data, '_self');
+                
+                if (response.status === 200) {
+                    console.log('Success:', response.data);
+                    window.open(response.data.data, '_self');
                 } else {
                     throw new Error('Network response was not ok.');
                 }
             } catch (error) {
                 console.error('Error:', error);
+                alert("Pembayaran gagal!");
             }
-        });
+        }
     </script>
 </body>
 </html>
+
+

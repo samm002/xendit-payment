@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pembayaran</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var appUrl = '<%= process.env.APP_URL %>'; // Menggunakan EJS untuk memasukkan variabel lingkungan
+    </script>
+</head>
+<body>
+    <h1>Form Pembayaran</h1>
+    <form id="paymentForm" method="post">
+        <label for="paymentAmount">Jumlah Pembayaran:</label>
+        <input type="number" id="paymentAmount" name="paymentAmount" required>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const paymentAmount = document.getElementById('paymentAmount').value;
+
+            try {
+                const response = await fetch(`${appUrl}/pay`, {  // Menggunakan appUrl yang didefinisikan di atas
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ paymentAmount }),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Success:', data);
+                    window.open(data.data, '_self');
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

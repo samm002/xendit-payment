@@ -10,7 +10,7 @@ const port = 3000;
 app.use(cors({origin: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use('/assets', express.static('assets'));
 
 
 // View Engine Setup
